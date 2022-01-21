@@ -1,44 +1,28 @@
-import {useState} from "react"
+import {BrowserRouter, Route, Routes} from "react-router-dom"
 
-import logo from "./logo.svg"
-import "./App.css"
+import Chat from "./pages/Chat"
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import SignUp from "./pages/SignUp"
+import Footer from "./ui/layout/Footer"
+import Navbar from "./ui/layout/Navbar"
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="App">
-      <header className="App-header">
-        <img alt="logo" className="App-logo" src={logo} />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Learn React
-          </a>
-          {" | "}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className="bg-stone-900 text-white flex flex-col h-full min-h-screen">
+      <BrowserRouter>
+        <Navbar />
+        <div className="container mx-auto px-4 flex-1">
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Login />} path="/login" />
+            <Route element={<SignUp />} path="/signup" />
+            {/* Down should be a private route */}
+            <Route element={<Chat />} path="/chat" />
+          </Routes>
+        </div>
+        <Footer />
+      </BrowserRouter>
     </div>
   )
 }
