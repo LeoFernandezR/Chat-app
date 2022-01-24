@@ -2,6 +2,9 @@
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "strict": true,
+    "baseUrl": ".",
+    "typeRoots": ["@types", "node_modules/@types"]
   }
 }
