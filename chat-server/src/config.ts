@@ -1,8 +1,11 @@
 import dotenv from "dotenv"
 dotenv.config()
 
+// TODO: Change DB variables to MONGODB_URI instead
+
 const config = {
   PORT: process.env.PORT || 4000,
+  MONGODB_URI: process.env.MONGODB_URI,
   DB_DATABASE: process.env.DB_DATABASE,
   DB_USERNAME: process.env.DB_USERNAME,
   DB_PASSWORD: process.env.DB_PASSWORD,
