@@ -8,7 +8,7 @@ interface Props {}
 const Navbar: React.FC<Props> = ({}) => {
   return (
     <header className=" bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 shadow relative w-full">
-      <div className="absolute w-full h-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 blur-lg opacity-80" />
+      <div className="absolute bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 blur w-full h-full" />
 
       <div className="flex items-center justify-between px-6 py-2 relative">
         <Link to="/">
