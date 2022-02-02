@@ -1,11 +1,15 @@
 import React from "react"
 import {Link} from "react-router-dom"
 
+import menuOptions from "./MenuOptions.json"
 import ModalMenu from "./ModalMenu"
 
-interface Props {}
+export interface Option {
+  title: string
+  url: string
+}
 
-const menuOptions = ["Log In", "Sign Up"]
+interface Props {}
 
 const Menu: React.FC<Props> = ({}) => {
   return (

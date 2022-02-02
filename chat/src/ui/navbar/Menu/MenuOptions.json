@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Log In",
+    "url": "/login"
+  },
+  {
+    "title": "Sign up",
+    "url": "/signup"
+  }
+]

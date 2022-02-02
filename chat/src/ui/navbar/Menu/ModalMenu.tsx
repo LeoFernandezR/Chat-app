@@ -2,9 +2,10 @@ import {Icon} from "@iconify/react"
 import React, {useState} from "react"
 
 import ModalMenuItem from "./ModalMenuItem"
+import {Option} from "./Menu"
 
 interface Props {
-  menuOptions: string[]
+  menuOptions: Option[]
 }
 
 const ModalMenu: React.FC<Props> = ({menuOptions}) => {
@@ -22,8 +23,8 @@ const ModalMenu: React.FC<Props> = ({menuOptions}) => {
         }`}
       >
         <ul className="text-center w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-          {menuOptions.map((option) => (
-            <ModalMenuItem key={option} option={option} />
+          {menuOptions.map(({title, url}) => (
+            <ModalMenuItem key={title} title={title} url={url} />
           ))}
         </ul>
       </nav>

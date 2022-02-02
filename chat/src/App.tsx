@@ -5,14 +5,14 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import Footer from "./ui/layout/Footer"
-import Navbar from "./ui/layout/Navbar"
+import Navbar from "./ui/navbar/Navbar"
 
 function App() {
   return (
     <div className="bg-stone-900 text-white flex flex-col h-full min-h-screen">
       <BrowserRouter>
         <Navbar />
-        <div className="container mx-auto px-4 flex-1">
+        <div className="container mx-auto px-4 flex-1 flex flex-col">
           <Routes>
             <Route element={<Home />} path="/" />
             <Route element={<Login />} path="/login" />
