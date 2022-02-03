@@ -1,11 +1,14 @@
 import {Icon} from "@iconify/react"
-import React, {useState} from "react"
+import React, {forwardRef, ForwardRefRenderFunction, useState} from "react"
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   password?: boolean
+  error?: string
 }
 
-const TextField: React.FC<Props> = ({className, type, password, ...props}) => {
+type ITextField = ForwardRefRenderFunction<HTMLInputElement, Props>
+
+const TextField: ITextField = ({type, password, error, ...props}, ref) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const buttonIcon = showPassword ? (
@@ -21,29 +24,34 @@ const TextField: React.FC<Props> = ({className, type, password, ...props}) => {
   return (
     <div className="relative">
       {password ? (
-        <>
+        <div className="relative">
           <input
-            className={`relative p-2 px-4 w-full rounded-md bg-stone-700/30 text-white font-light text-xl placeholder:text-white/70 outline-none focus:ring focus:ring-pink-400 transition-all ease-in duration-300  ${className}`}
+            ref={ref}
+            className="relative p-2 px-4 w-full rounded-md bg-stone-700/30 text-white font-light text-xl placeholder:text-white/70 outline-none focus:ring focus:ring-pink-400 transition-all ease-in duration-300"
             type={showPassword ? "text" : "password"}
             {...props}
           />
           <button
-            className="absolute top-0 bottom-0 right-4 text-2xl outline-none hover:text-pink-400 focus:text-pink-400 transition-colors ease-in duration-300"
+            className="absolute top-0 bottom-0 right-4 text-2xl outline-none hover:text-pink-400  transition-colors ease-in duration-300"
             type="button"
             onClick={toggleShowPassword}
           >
             {buttonIcon}
           </button>
-        </>
+        </div>
       ) : (
-        <input
-          className={`relative p-2 px-4 w-full rounded-md bg-stone-700/30 text-white font-light text-xl placeholder:text-white/70 outline-none focus:ring focus:ring-pink-400 transition-all ease-in duration-300  ${className}`}
-          type={type}
-          {...props}
-        />
+        <div className="relative">
+          <input
+            ref={ref}
+            className="relative p-2 px-4 w-full rounded-md bg-stone-700/30 text-white font-light text-xl placeholder:text-white/70 outline-none focus:ring focus:ring-pink-400 transition-all ease-in duration-300"
+            type={type}
+            {...props}
+          />
+        </div>
       )}
+      {error && <p className="text-rose-200 text-left m-0">{error}</p>}
     </div>
   )
 }
 
-export default TextField
+export default forwardRef(TextField)

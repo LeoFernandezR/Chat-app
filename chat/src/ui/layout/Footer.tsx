@@ -6,7 +6,7 @@ const Footer: React.FC<Props> = ({}) => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="flex justify-center items-center py-4 text-stone-300 font-light text-center">
+    <footer className="flex justify-center items-center py-4 text-stone-300 text-center">
       <p>
         Leonardo Fernández <InlineIcon className="inline" icon="noto:alien-monster" /> | &copy;{" "}
         {year}
