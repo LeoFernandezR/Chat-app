@@ -12,9 +12,9 @@ const TextField: ITextField = ({type, password, error, ...props}, ref) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const buttonIcon = showPassword ? (
-    <Icon inline className="inline" icon="mdi:eye-outline" />
+    <Icon inline className="inline " icon="mdi:eye-off-outline" />
   ) : (
-    <Icon inline className="inline" icon="mdi:eye-off-outline" />
+    <Icon inline className="inline" icon="mdi:eye-outline" />
   )
 
   const toggleShowPassword = () => {
@@ -32,7 +32,7 @@ const TextField: ITextField = ({type, password, error, ...props}, ref) => {
             {...props}
           />
           <button
-            className="absolute top-0 bottom-0 right-4 text-2xl outline-none hover:text-pink-400  transition-colors ease-in duration-300"
+            className="absolute top-0 bottom-0 right-4 text-2xl outline-none hover:text-pink-400 transition-colors ease-in duration-300 focus:text-pink-400"
             type="button"
             onClick={toggleShowPassword}
           >
