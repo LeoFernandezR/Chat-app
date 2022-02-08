@@ -1,7 +1,11 @@
-import React from "react"
+import React, {useState} from "react"
 import {SubmitHandler, useForm} from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import {Icon} from "@iconify/react"
+
+import TextField from "../../ui/form/TextField"
+import api from "../../api"
 
 interface ISignUpFormInputs {
   username: string
@@ -20,26 +24,45 @@ const schema = yup.object({
     .required(),
 })
 
-import TextField from "../../ui/form/TextField"
-import api from "../../api"
 interface Props {}
 
 const SignUpForm: React.FC<Props> = ({}) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: {errors},
   } = useForm<ISignUpFormInputs>({
     resolver: yupResolver(schema),
   })
 
+  const [submitting, setSubmitting] = useState(false)
+
   const onSubmit: SubmitHandler<ISignUpFormInputs> = async (data) => {
+    setSubmitting(true)
     try {
-      // const res = await api.signup(data)
+      const res = await api.signup(data)
+
+      sessionStorage.setItem("token", res.data.token)
     } catch (error) {
-      console.error((error as Error).message)
+      const errorMessage = (error as Error).message
+
+      if (errorMessage.includes("username")) {
+        return setError("username", {type: "manual", message: errorMessage})
+      }
+
+      if (errorMessage.includes("password")) {
+        return setError("password", {type: "manual", message: errorMessage})
+      }
     }
+    setSubmitting(false)
   }
+
+  const submit = submitting ? (
+    <Icon inline className="inline animate-spin" icon="mdi:loading" />
+  ) : (
+    "Sign up"
+  )
 
   return (
     <form className="flex flex-col gap-2 px-2" onSubmit={handleSubmit(onSubmit)}>
@@ -71,7 +94,7 @@ const SignUpForm: React.FC<Props> = ({}) => {
         className="bg-pink-400 hover:bg-pink-500 focus:bg-pink-500 outline-none transition-colors duration-300 ease-in rounded-md py-2 px-4 mt-4 text-xl"
         type="submit"
       >
-        Sign up
+        {submit}
       </button>
     </form>
   )
