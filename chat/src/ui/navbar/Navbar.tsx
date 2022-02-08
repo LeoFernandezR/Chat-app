@@ -14,7 +14,7 @@ const Navbar: React.FC<Props> = ({}) => {
         <Link to="/">
           <h1 className="text-3xl py-2 pr-4">
             <InlineIcon className="inline mr-2 text-blue-400" icon="mdi:react" />
-            Chat
+            Chatter
           </h1>
         </Link>
         <Menu />
