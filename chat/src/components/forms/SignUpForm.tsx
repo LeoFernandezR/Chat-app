@@ -41,21 +41,24 @@ const SignUpForm: React.FC<Props> = ({}) => {
   const onSubmit: SubmitHandler<ISignUpFormInputs> = async (data) => {
     setSubmitting(true)
     try {
-      const res = await api.signup(data)
+      const {token}: {token: string} = await api.signup(data)
 
-      sessionStorage.setItem("token", res.data.token)
+      setSubmitting(false)
+
+      sessionStorage.setItem("Authorization", `Bearer ${token}`)
     } catch (error) {
       const errorMessage = (error as Error).message
+
+      setSubmitting(false)
 
       if (errorMessage.includes("username")) {
         return setError("username", {type: "manual", message: errorMessage})
       }
 
-      if (errorMessage.includes("password")) {
-        return setError("password", {type: "manual", message: errorMessage})
+      if (errorMessage.includes("email")) {
+        return setError("email", {type: "manual", message: errorMessage})
       }
     }
-    setSubmitting(false)
   }
 
   const submit = submitting ? (
