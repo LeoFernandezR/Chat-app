@@ -18,6 +18,18 @@ const signup: RequestHandler = async (req, res) => {
   try {
     const {username, email, password} = req.body
 
+    if (!username) {
+      return res.status(400).json({message: "Username is missing"})
+    }
+
+    if (!email) {
+      return res.status(400).json({message: "Email is missing"})
+    }
+
+    if (!password) {
+      return res.status(400).json({message: "Password is missing"})
+    }
+
     const user = new User({
       username,
       email,
@@ -37,11 +49,17 @@ const signup: RequestHandler = async (req, res) => {
 
 const login: RequestHandler = async (req, res) => {
   try {
-    const {username, email, password} = req.body
+    const {username, password} = req.body
 
-    const searchValue = {username} || {email}
+    if (!username) {
+      return res.status(400).json({message: "Username is missing"})
+    }
 
-    const userFound = await User.findOne(searchValue)
+    if (!password) {
+      return res.status(400).json({message: "Password is missing"})
+    }
+
+    const userFound = await User.findOne({username})
 
     if (!userFound) return res.status(404).send("User not found")
 
