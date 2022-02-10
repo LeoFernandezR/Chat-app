@@ -18,14 +18,4 @@ const verifySignUp: RequestHandler = async (req, res, next) => {
   }
 }
 
-const noEmptyFields: RequestHandler = (req, res, next) => {
-  const {username, email, password} = req.body
-
-  if (!username || !email || !password) {
-    return res.status(400).json({message: "No empty fields"})
-  }
-
-  next()
-}
-
-export {verifySignUp, noEmptyFields}
+export {verifySignUp}
