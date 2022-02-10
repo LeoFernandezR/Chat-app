@@ -1,17 +1,29 @@
 import axios, {AxiosError} from "axios"
 
-export interface newUser {
+export interface loginUser {
   username: string
-  email: string
   password: string
 }
-
-type ErrorCB = (error: string) => void
+export interface newUser extends loginUser {
+  password: string
+  confirmPassword: string
+}
 
 const api = {
-  signup: async (data: newUser, _errorCB?: ErrorCB) => {
+  signup: async (data: newUser) => {
     try {
       const res = await axios.post("/api/auth/signup", data)
+
+      return res.data
+    } catch (error) {
+      const err = (error as AxiosError).response?.data.message
+
+      throw new Error(err)
+    }
+  },
+  login: async (data: loginUser) => {
+    try {
+      const res = await axios.post("/api/auth/login", data)
 
       return res.data
     } catch (error) {
