@@ -2,6 +2,7 @@ import {RequestHandler} from "express"
 import jwt from "jsonwebtoken"
 import config from "../config"
 import User from "../models/User"
+import {isEmail} from "../utils/isEmail"
 
 const generateToken = (
   payload: {id: string},
@@ -49,17 +50,19 @@ const signup: RequestHandler = async (req, res) => {
 
 const login: RequestHandler = async (req, res) => {
   try {
-    const {username, password} = req.body
+    const {username: searchParam, password}: {username: string; password: string} = req.body
 
-    if (!username) {
-      return res.status(400).json({message: "Username is missing"})
+    if (!searchParam) {
+      return res.status(400).json({message: "Username or Email is missing"})
     }
 
     if (!password) {
       return res.status(400).json({message: "Password is missing"})
     }
 
-    const userFound = await User.findOne({username})
+    const searchParamKey = isEmail(searchParam) ? "email" : "username"
+
+    const userFound = await User.findOne({[searchParamKey]: searchParam})
 
     if (!userFound) return res.status(404).send("User not found")
 
@@ -73,7 +76,6 @@ const login: RequestHandler = async (req, res) => {
     }
 
     const token = generateToken({id: userFound._id}, config.ACCESS_TOKEN_SECRET)
-    console.log(token)
 
     return res.status(200).json({token: token})
   } catch (error) {
