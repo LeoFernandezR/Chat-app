@@ -1,4 +1,4 @@
 import {verifyToken} from "./authJWT"
-import {verifySignUp, noEmptyFields} from "./authData"
+import {verifySignUp} from "./authData"
 
-export {verifyToken, verifySignUp, noEmptyFields}
+export {verifyToken, verifySignUp}
