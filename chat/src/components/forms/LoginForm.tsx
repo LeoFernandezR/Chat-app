@@ -6,6 +6,7 @@ import * as yup from "yup"
 
 import api from "../../api"
 import TextField from "../../ui/form/TextField"
+import useAuthContext from "../../hooks/useAuthContext"
 
 interface ILoginFormInputs {
   username: string
@@ -20,6 +21,7 @@ const schema = yup.object({
 interface Props {}
 
 const LoginForm: React.FC<Props> = () => {
+  const {saveToken} = useAuthContext()
   const {
     register,
     handleSubmit,
@@ -36,9 +38,8 @@ const LoginForm: React.FC<Props> = () => {
     try {
       const {token} = await api.login(data)
 
+      saveToken(token)
       setSubmitting(false)
-
-      sessionStorage.setItem("Authorization", `Bearer ${token}`)
     } catch (error) {
       const errorMessage = (error as Error).message
 

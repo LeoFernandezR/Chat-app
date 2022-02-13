@@ -6,6 +6,7 @@ import {Icon} from "@iconify/react"
 
 import TextField from "../../ui/form/TextField"
 import api from "../../api"
+import useAuthContext from "../../hooks/useAuthContext"
 
 interface ISignUpFormInputs {
   username: string
@@ -27,6 +28,8 @@ const schema = yup.object({
 interface Props {}
 
 const SignUpForm: React.FC<Props> = ({}) => {
+  const {saveToken} = useAuthContext()
+
   const {
     register,
     handleSubmit,
@@ -41,11 +44,11 @@ const SignUpForm: React.FC<Props> = ({}) => {
   const onSubmit: SubmitHandler<ISignUpFormInputs> = async (data) => {
     setSubmitting(true)
     try {
-      const {token}: {token: string} = await api.signup(data)
+      const {token} = await api.signup(data)
+
+      saveToken(token)
 
       setSubmitting(false)
-
-      sessionStorage.setItem("Authorization", `Bearer ${token}`)
     } catch (error) {
       const errorMessage = (error as Error).message
 
