@@ -9,6 +9,12 @@ export interface newUser extends loginUser {
   confirmPassword: string
 }
 
+const throwErorr = (error: unknown) => {
+  const err = (error as AxiosError).response?.data.message
+
+  throw new Error(err)
+}
+
 const api = {
   signup: async (data: newUser) => {
     try {
@@ -16,9 +22,7 @@ const api = {
 
       return res.data
     } catch (error) {
-      const err = (error as AxiosError).response?.data.message
-
-      throw new Error(err)
+      return throwErorr(error)
     }
   },
   login: async (data: loginUser) => {
@@ -27,9 +31,20 @@ const api = {
 
       return res.data
     } catch (error) {
-      const err = (error as AxiosError).response?.data.message
+      return throwErorr(error)
+    }
+  },
+  getUserData: async (token: string) => {
+    try {
+      const res = await axios.get("/api/user", {
+        headers: {
+          Authorization: token,
+        },
+      })
 
-      throw new Error(err)
+      return res
+    } catch (error) {
+      return throwErorr(error)
     }
   },
 }
