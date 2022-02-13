@@ -6,6 +6,7 @@ import cors from "cors"
 import authRoutes from "./routes/auth.routes"
 import sockets from "./sockets"
 import {authValidation} from "./middlewares/socketMiddleware"
+import userRoutes from "./routes/user.routes"
 
 const app = express()
 const httpServer = createServer(app)
@@ -29,5 +30,6 @@ app.use(express.urlencoded({extended: false}))
 
 //routes
 app.use("/api/auth", authRoutes)
+app.use("/api/user", userRoutes)
 
 export {httpServer, app}
