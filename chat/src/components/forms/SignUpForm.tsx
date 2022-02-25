@@ -3,6 +3,7 @@ import {SubmitHandler, useForm} from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import {Icon} from "@iconify/react"
+import {useNavigate} from "react-router-dom"
 
 import TextField from "../../ui/form/TextField"
 import api from "../../api"
@@ -39,6 +40,7 @@ const SignUpForm: React.FC<Props> = ({}) => {
     resolver: yupResolver(schema),
   })
 
+  const navigate = useNavigate()
   const [submitting, setSubmitting] = useState(false)
 
   const onSubmit: SubmitHandler<ISignUpFormInputs> = async (data) => {
@@ -47,12 +49,10 @@ const SignUpForm: React.FC<Props> = ({}) => {
       const {token} = await api.signup(data)
 
       saveToken(token)
-
       setSubmitting(false)
+      navigate("/chat")
     } catch (error) {
       const errorMessage = (error as Error).message
-
-      setSubmitting(false)
 
       if (errorMessage.includes("username")) {
         return setError("username", {type: "manual", message: errorMessage})
@@ -62,6 +62,7 @@ const SignUpForm: React.FC<Props> = ({}) => {
         return setError("email", {type: "manual", message: errorMessage})
       }
     }
+    setSubmitting(false)
   }
 
   const submit = submitting ? (
@@ -98,6 +99,7 @@ const SignUpForm: React.FC<Props> = ({}) => {
       />
       <button
         className="bg-pink-400 hover:bg-pink-500 focus:bg-pink-500 outline-none transition-colors duration-300 ease-in rounded-md py-2 px-4 mt-4 text-xl"
+        disabled={submitting}
         type="submit"
       >
         {submit}

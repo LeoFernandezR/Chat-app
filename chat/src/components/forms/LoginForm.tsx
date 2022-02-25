@@ -3,6 +3,7 @@ import {Icon} from "@iconify/react"
 import {useForm, SubmitHandler} from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
 import * as yup from "yup"
+import {useNavigate} from "react-router-dom"
 
 import api from "../../api"
 import TextField from "../../ui/form/TextField"
@@ -31,6 +32,8 @@ const LoginForm: React.FC<Props> = () => {
     resolver: yupResolver(schema),
   })
 
+  const navigate = useNavigate()
+
   const [submitting, setSubmitting] = useState(false)
 
   const onSubmit: SubmitHandler<ILoginFormInputs> = async (data) => {
@@ -40,15 +43,15 @@ const LoginForm: React.FC<Props> = () => {
 
       saveToken(token)
       setSubmitting(false)
+      navigate("/chat")
     } catch (error) {
       const errorMessage = (error as Error).message
-
-      setSubmitting(false)
 
       if (errorMessage.includes("username")) {
         return setError("username", {type: "manual", message: errorMessage})
       }
     }
+    setSubmitting(false)
   }
 
   const submit = submitting ? (
@@ -58,7 +61,7 @@ const LoginForm: React.FC<Props> = () => {
   )
 
   return (
-    <form className="flex flex-col gap-2 px-2" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
       <TextField
         placeholder="username or email"
         type="text"
@@ -74,6 +77,7 @@ const LoginForm: React.FC<Props> = () => {
 
       <button
         className="bg-pink-400 hover:bg-pink-500 focus:bg-pink-500 outline-none transition-colors duration-300 ease-in rounded-md py-2 px-4 mt-4 text-xl"
+        disabled={submitting}
         type="submit"
       >
         {submit}
