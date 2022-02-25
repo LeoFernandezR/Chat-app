@@ -13,23 +13,22 @@ export interface User {
 const useUser = (token: string | null, login: VoidFunction, logout: VoidFunction) => {
   const [user, setUser] = useState<User>()
 
-  // const fetchUser = async () => {
-  //   if (!token) return logout()
-
-  //   const res = await api.getUserData(token)
-
-  //   login()
-  //   setUser(res.data)
-  // }
-
   useEffect(() => {
     if (!token) return logout()
 
-    api.getUserData(token).then((res) => {
-      login()
-      setUser(res.data)
-    })
-  }, [token, login, logout])
+    api
+      .getUserData(token)
+      .then((res) => {
+        login()
+        setUser(res.data.user)
+      })
+      .catch((err) => {
+        logout()
+        // eslint-disable-next-line no-console
+        console.error(err)
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token])
 
   return user
 }
