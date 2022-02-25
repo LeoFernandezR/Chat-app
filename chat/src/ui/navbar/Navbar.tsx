@@ -12,7 +12,7 @@ const Navbar: React.FC<Props> = ({}) => {
 
       <div className="flex items-center justify-between px-6 py-2 relative">
         <Link to="/">
-          <h1 className="text-3xl py-2 pr-4">
+          <h1 className="text-2xl sm:text-3xl py-2 pr-4">
             <InlineIcon className="inline mr-2 text-blue-400" icon="mdi:react" />
             Chatter
           </h1>
