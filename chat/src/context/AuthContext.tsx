@@ -1,28 +1,76 @@
-import React, {createContext} from "react"
+import React, {createContext, useEffect, useState} from "react"
 
-import useAuth from "./hooks/useAuth"
-import useToken from "./hooks/useToken"
-import useUser, {User} from "./hooks/useUser"
+import api from "../api"
 
-interface IAuthContext {
-  token: string | null
-  loggedIn: boolean
-  saveToken: (token: string) => void
-  login: VoidFunction
+export interface User {
+  _id: string
+  username: string
+  email: string
+  createdAt: string
+  updatedAt: string
+}
+interface AuthContextType {
+  login: (token: string) => void
   logout: VoidFunction
-  user: User | undefined
+  user: User | null
+  token: string
+  isAuthenticated: boolean
 }
 
 // @ts-ignore
-export const AuthContext = createContext<IAuthContext>({})
+export const AuthContext = createContext<AuthContextType>({})
 
 export const AuthProvider: React.FC = ({children}) => {
-  const {saveToken, token} = useToken()
-  const {loggedIn, login, logout} = useAuth()
-  const user = useUser(token, login, logout)
+  const [user, setUser] = useState<AuthContextType["user"]>(null)
+  const [token, setToken] = useState(localStorage.getItem("token") ?? "")
+  const [isAuthenticated, setIsAuthenticated] = useState(() => token !== "")
+
+  const logout = () => {
+    localStorage.removeItem("token")
+    setToken("")
+    setUser(null)
+  }
+
+  const login = async (token: string) => {
+    if (!token) return
+
+    const authToken = token.includes("Bearer") ? token : `Bearer ${token}`
+
+    localStorage.setItem("token", authToken)
+
+    setToken(authToken)
+
+    try {
+      const res = await api.getUserData(authToken)
+
+      setIsAuthenticated(true)
+      const loggedUser = res.data.user
+
+      setUser(loggedUser)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error)
+      setIsAuthenticated(false)
+    }
+  }
+
+  useEffect(() => {
+    setIsAuthenticated(token !== "")
+  }, [token])
+
+  useEffect(() => {
+    if (!isAuthenticated) return
+
+    login(token)
+
+    return () => {
+      logout()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
-    <AuthContext.Provider value={{saveToken, token, loggedIn, login, logout, user}}>
+    <AuthContext.Provider value={{token, login, logout, user, isAuthenticated}}>
       {children}
     </AuthContext.Provider>
   )
