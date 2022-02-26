@@ -45,6 +45,7 @@ const signup: RequestHandler = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.sendStatus(500)
+    return
   }
 }
 
@@ -66,9 +67,9 @@ const login: RequestHandler = async (req, res) => {
 
     if (!userFound) return res.status(404).send("User not found")
 
-    const mathchPassword = User.comparePassword(password, userFound.password)
+    const matchedPassword = User.comparePassword(password, userFound.password)
 
-    if (!mathchPassword) {
+    if (!matchedPassword) {
       return res.status(401).json({
         token: null,
         message: "Invalid password",
@@ -81,6 +82,7 @@ const login: RequestHandler = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.sendStatus(500)
+    return
   }
 }
 

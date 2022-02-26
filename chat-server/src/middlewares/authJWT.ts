@@ -27,7 +27,7 @@ const verifyToken: RequestHandler = async (req, res, next) => {
       next()
     }
   } catch (err) {
-    res.sendStatus(500)
+    return res.sendStatus(500)
   }
 }
 
