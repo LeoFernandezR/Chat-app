@@ -1,13 +1,13 @@
-import React, {useState} from "react"
-import {Icon} from "@iconify/react"
-import {useForm, SubmitHandler} from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
-import * as yup from "yup"
+import {Icon} from "@iconify/react"
+import React, {useState} from "react"
+import {SubmitHandler, useForm} from "react-hook-form"
 import {useNavigate} from "react-router-dom"
+import * as yup from "yup"
 
 import api from "../../api"
-import TextField from "../../ui/form/TextField"
 import useAuthContext from "../../hooks/useAuthContext"
+import TextField from "../../ui/form/TextField"
 
 interface ILoginFormInputs {
   username: string
@@ -22,7 +22,7 @@ const schema = yup.object({
 interface Props {}
 
 const LoginForm: React.FC<Props> = () => {
-  const {saveToken} = useAuthContext()
+  const {login} = useAuthContext()
   const {
     register,
     handleSubmit,
@@ -41,7 +41,9 @@ const LoginForm: React.FC<Props> = () => {
     try {
       const {token} = await api.login(data)
 
-      saveToken(token)
+      // eslint-disable-next-line no-console
+      console.log(token)
+      await login(token)
       setSubmitting(false)
       navigate("/chat")
     } catch (error) {

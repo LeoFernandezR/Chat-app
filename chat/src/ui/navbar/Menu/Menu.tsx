@@ -8,14 +8,14 @@ import ModalMenu from "./ModalMenu"
 interface Props {}
 
 const Menu: React.FC<Props> = ({}) => {
-  const {loggedIn, user, logout} = useAuthContext()
+  const {user, logout} = useAuthContext()
 
   return (
     <div>
       <ModalMenu />
       <nav className="hidden sm:block">
         <ul className="flex gap-2 text-xl items-center">
-          {loggedIn ? (
+          {user ? (
             <>
               <li>
                 <p className="mr-2">

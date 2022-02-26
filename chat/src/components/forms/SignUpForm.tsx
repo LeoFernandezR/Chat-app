@@ -29,7 +29,7 @@ const schema = yup.object({
 interface Props {}
 
 const SignUpForm: React.FC<Props> = ({}) => {
-  const {saveToken} = useAuthContext()
+  const {login} = useAuthContext()
 
   const {
     register,
@@ -48,7 +48,7 @@ const SignUpForm: React.FC<Props> = ({}) => {
     try {
       const {token} = await api.signup(data)
 
-      saveToken(token)
+      await login(token)
       setSubmitting(false)
       navigate("/chat")
     } catch (error) {

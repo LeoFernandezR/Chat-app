@@ -1,9 +1,13 @@
 import React from "react"
+import {Link} from "react-router-dom"
 
 import ChatSVG from "../assets/svg/chat.svg"
+import useAuthContext from "../hooks/useAuthContext"
 interface Props {}
 
 const Home: React.FC<Props> = ({}) => {
+  const {user} = useAuthContext()
+
   return (
     <main className="flex flex-1 items-center justify-center">
       <article className="flex flex-1  justify-center">
@@ -19,6 +23,14 @@ const Home: React.FC<Props> = ({}) => {
           <div className="max-w-md w-full">
             <img alt="" className="w-full" src={ChatSVG} />
           </div>
+          {user && (
+            <Link
+              className="block px-4 py-2 mt-8 bg-pink-400 rounded-md text-lg hover:bg-pink-500 transition-colors duration-300 ease-in"
+              to="/chat"
+            >
+              Go to Chatter
+            </Link>
+          )}
         </section>
       </article>
     </main>

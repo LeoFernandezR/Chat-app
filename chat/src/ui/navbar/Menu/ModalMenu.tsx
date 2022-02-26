@@ -8,7 +8,7 @@ import ModalMenuItem from "./ModalMenuItem"
 interface Props {}
 
 const ModalMenu: React.FC<Props> = () => {
-  const {loggedIn, logout, user} = useAuthContext()
+  const {logout, user} = useAuthContext()
   const [showMenu, setShowMenu] = useState(false)
   const iconMenu = showMenu ? <Icon icon="mdi:close" /> : <Icon icon="mdi:menu" />
 
@@ -23,7 +23,7 @@ const ModalMenu: React.FC<Props> = () => {
 
   return (
     <div className="sm:hidden flex items-center gap-2 text-lg">
-      {loggedIn && (
+      {user && (
         <p>
           Hello, <span className="text-pink-300 font-medium">{user?.username}</span> 👋
         </p>
@@ -38,7 +38,7 @@ const ModalMenu: React.FC<Props> = () => {
         }`}
       >
         <ul className="text-center w-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-          {loggedIn ? (
+          {user ? (
             <ModalMenuItem action="button" title="Logout" url="/" onClick={handleLogout} />
           ) : (
             <>
