@@ -4,26 +4,27 @@ import Chat from "./pages/Chat"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
-import Footer from "./ui/layout/Footer"
-import Navbar from "./ui/navbar/Navbar"
+import RequireAuth from "./routes/RequireAuth"
+import Layout from "./ui/layout/Layout"
+import LayoutChat from "./ui/layout/LayoutChat"
 
 function App() {
   return (
-    <div className="bg-stone-900 text-white flex flex-col h-full min-h-screen">
-      <BrowserRouter>
-        <Navbar />
-        <div className="container mx-auto px-4 flex-1 flex flex-col">
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Login />} path="/login" />
-            <Route element={<SignUp />} path="/signup" />
-            {/* Down should be a private route */}
-            <Route element={<Chat />} path="/chat" />
-          </Routes>
-        </div>
-        <Footer />
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />} path="/">
+          <Route index element={<Home />} />
+          <Route element={<Login />} path="login" />
+          <Route element={<SignUp />} path="signup" />
+        </Route>
+
+        <Route element={<RequireAuth />}>
+          <Route element={<LayoutChat />} path="/chat">
+            <Route index element={<Chat />} />
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
 
