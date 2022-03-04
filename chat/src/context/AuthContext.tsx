@@ -27,6 +27,7 @@ export const AuthProvider: React.FC = ({children}) => {
 
   const logout = () => {
     localStorage.removeItem("token")
+    setIsAuthenticated(false)
     setToken("")
     setUser(null)
   }
@@ -50,6 +51,7 @@ export const AuthProvider: React.FC = ({children}) => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error)
+      logout()
       setIsAuthenticated(false)
     }
   }
@@ -60,7 +62,6 @@ export const AuthProvider: React.FC = ({children}) => {
 
   useEffect(() => {
     if (!isAuthenticated) return
-
     login(token)
 
     return () => {
