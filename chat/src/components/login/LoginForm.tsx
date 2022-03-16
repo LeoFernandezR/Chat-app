@@ -7,7 +7,7 @@ import * as yup from "yup"
 
 import api from "../../api"
 import useAuthContext from "../../hooks/useAuthContext"
-import TextField from "../../ui/form/TextField"
+import TextField from "../commons/form/TextField"
 
 interface ILoginFormInputs {
   username: string

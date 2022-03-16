@@ -1,11 +1,11 @@
 import {Icon} from "@iconify/react"
 import React from "react"
 
-import LoginForm from "../components/forms/LoginForm"
+import LoginForm from "./LoginForm"
 
 interface Props {}
 
-const Login: React.FC<Props> = ({}) => {
+export const Login: React.FC<Props> = ({}) => {
   return (
     <div className="flex justify-center items-center flex-1">
       <div className="relative max-w-xl w-full">
@@ -20,5 +20,3 @@ const Login: React.FC<Props> = ({}) => {
     </div>
   )
 }
-
-export default Login

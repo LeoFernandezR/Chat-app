@@ -5,7 +5,7 @@ import * as yup from "yup"
 import {Icon} from "@iconify/react"
 import {useNavigate} from "react-router-dom"
 
-import TextField from "../../ui/form/TextField"
+import TextField from "../commons/form/TextField"
 import api from "../../api"
 import useAuthContext from "../../hooks/useAuthContext"
 

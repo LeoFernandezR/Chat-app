@@ -1,11 +1,11 @@
 import {Icon} from "@iconify/react"
 import React from "react"
 
-import SignUpForm from "../components/forms/SignUpForm"
+import SignUpForm from "./SignUpForm"
 
 interface Props {}
 
-const SignUp: React.FC<Props> = ({}) => {
+export const SignUp: React.FC<Props> = ({}) => {
   return (
     <div className="flex justify-center items-center flex-1">
       <div className="relative max-w-xl w-full">
@@ -20,5 +20,3 @@ const SignUp: React.FC<Props> = ({}) => {
     </div>
   )
 }
-
-export default SignUp
