@@ -10,7 +10,7 @@ interface Props {
 }
 
 const ChatAside: React.FC<Props> = ({rooms, openNewRoomModal}) => {
-  const {user} = useAuthContext()
+  const {user, logout} = useAuthContext()
 
   return (
     <aside className="flex flex-col flex-[0.15] min-w-fit shadow-xl">
@@ -39,7 +39,10 @@ const ChatAside: React.FC<Props> = ({rooms, openNewRoomModal}) => {
         <h4 className="text-lg">
           Hello <span className="font-bold">{user?.username}</span> 👋
         </h4>
-        <button className="text-2xl transition-color hover:text-pink-400 duration-300 ease-in">
+        <button
+          className="text-2xl transition-color hover:text-pink-400 duration-300 ease-in"
+          onClick={logout}
+        >
           <Icon className="inline" icon="tabler:logout" inline={true} />
         </button>
       </div>
