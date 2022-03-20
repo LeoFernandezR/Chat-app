@@ -9,8 +9,8 @@ export const Home: React.FC<Props> = ({}) => {
   const {user} = useAuthContext()
 
   return (
-    <main className="flex flex-1 items-center justify-between py-[4%] flex-col">
-      <article className="flex items-center justify-between pt-[2%]">
+    <main className="flex flex-1 items-center justify-center flex-col gap-8">
+      <article className="flex items-center justify-between">
         <section className="flex flex-col gap-4 justify-between items-center">
           <div className="flex flex-col gap-2 justify-center py-4">
             <h1 className="text-6xl font-bold text-center">
