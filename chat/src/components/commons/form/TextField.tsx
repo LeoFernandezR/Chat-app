@@ -8,7 +8,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 type ITextField = ForwardRefRenderFunction<HTMLInputElement, Props>
 
-const TextField: ITextField = ({type, password, error, ...props}, ref) => {
+const TextField: ITextField = ({type, password, error, className, ...props}, ref) => {
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const buttonIcon = showPassword ? (
@@ -27,7 +27,7 @@ const TextField: ITextField = ({type, password, error, ...props}, ref) => {
         <div className="relative">
           <input
             ref={ref}
-            className="relative p-2 px-4 w-full rounded-md bg-stone-700/30 text-white font-light text-xl placeholder:text-white/70 outline-none focus:ring focus:ring-pink-400 transition-all ease-in duration-300"
+            className={`relative py-2 px-4 w-full rounded-md bg-stone-700/30 text-white font-light text-xl placeholder:text-white/70 outline-none focus:ring focus:ring-pink-400 transition-all ease-in duration-300 ${className}`}
             type={showPassword ? "text" : "password"}
             {...props}
           />
