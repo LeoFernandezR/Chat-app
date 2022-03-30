@@ -13,3 +13,16 @@ input:-webkit-autofill:active {
 input:-webkit-autofill {
   -webkit-text-fill-color: #ffffff !important;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  @apply bg-pink-400;
+}
+::-webkit-scrollbar-track {
+  @apply bg-stone-700/30;
+  border-radius: 100px;
+  padding: 20rem;
+}
